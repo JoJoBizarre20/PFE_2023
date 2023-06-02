@@ -1,0 +1,35 @@
+span.counter{
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.detail-items {
+    display: flex;
+    list-style: none;
+    padding: 0;
+
+  }
+  
+  .detail-items li {
+    margin-right: 10px; /* Optional: Add some spacing between the items */
+  }
+  .detail-items.left
+  {
+    justify-content: flex-start;
+  }
+  .unfinished{
+    border: 3px dashed orange !important;
+  }
+
+.TODO{
+    border-left: solid 5px rgb(0, 204, 255);
+}
+.IN-PROGRESS{
+  border-left: solid 5px orange ;
+}
+.ON-HOLD{
+  border-left: solid 5px red ;
+}
+.FINISHED{
+  border-left: solid 5px rgb(21, 172, 21) ;
+}

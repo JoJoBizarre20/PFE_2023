@@ -61,7 +61,7 @@ class Ajax {
         $stmt = $this->db->runQuery($sql,$params);
         $UserData["projects"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $sql = "SELECT assignments.*,users.Username as Owner,projects.name as Project,Label as Status  FROM assignments JOIN projects ON ProjectId=projects.Id JOIN users ON  projects.UserId =users.Id JOIN statuses ON StatusId=statuses.Id  WHERE  assignments.isDeleted ='0' AND assignments.UserId=:user_id";
+        $sql = "SELECT assignments.*,users.Username as Owner,projects.name as Project,Label as Status  FROM assignments  JOIN projects ON ProjectId=projects.Id JOIN users ON  projects.UserId =users.Id JOIN statuses ON StatusId=statuses.Id  WHERE  assignments.isDeleted ='0' AND projects.isDeleted =0 AND assignments.UserId=:user_id";
         $params = array(
             ':user_id' => $_SESSION["user_id"],
         );
@@ -279,6 +279,66 @@ class Ajax {
         }
         else{
             header("location:/");
+        }
+    }
+    public function getProject()
+    {
+        if(isset($_SESSION['user_id'])){
+            try {
+                $input = json_decode(file_get_contents('php://input'),true);
+                $sql = "SELECT * FROM projects WHERE  Id= :Id";
+                $params = array(
+                    ':Id' => $input["Id"],
+                );
+                $stmt = $this->db->runQuery($sql,$params);
+                $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                return json_encode(["success" => true, "projects" => $projects]);
+
+                }catch (Exception $e){
+                    return json_encode(["success" => false, "message" => $e->getMessage()]);
+                }
+
+        }
+    }
+    public function getAssignment()
+    {   if(isset($_SESSION['user_id'])){
+            try {
+                    $input = json_decode(file_get_contents('php://input'),true);
+                    $sql = "SELECT * FROM assignments WHERE  Id= :Id";
+                    $params = array(
+                        ':Id' => $input["Id"],
+                    );
+                    $stmt = $this->db->runQuery($sql,$params);
+                    $assignments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    return json_encode(["success" => true, "assignments" => $assignments]);
+
+            }
+            catch (Exception $e){
+                return json_encode(["success" => false, "message" => $e->getMessage()]);
+            }
+        }
+    }
+    public function updateProject()
+    {
+        if(isset($_SESSION['user_id'])){
+            try {
+                    $input = json_decode(file_get_contents('php://input'),true);
+    
+                    $sql = "UPDATE projects SET Name=:name , DueDate=:DueDate WHERE  Id= :Id";
+                    $params = array(
+                        ':Id' => $input["ProjectId"],
+                        ':name' => $input["Name"],
+                        ':DueDate' => $input["DueDate"],
+                    );
+                    $stmt = $this->db->runQuery($sql,$params);
+                    
+                    return json_encode(["success" => true]);
+
+            }
+            catch (Exception $e){
+                return json_encode(["success" => false, "message" => $e->getMessage()]);
+            }
+
         }
     }
 

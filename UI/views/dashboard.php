@@ -88,7 +88,7 @@ foreach($stats['projects'] as $project)
                 </ul>
                 <ul class="detail-items left">
                     <li>
-                        <span  class="waves-effect waves-light T modal-trigger" href="#updateProject" ><i data-project-id="<?=$project["Id"]?>" class="material-icons purple-text darken-4 T">edit</i></span>
+                        <span  class="waves-effect waves-light T modal-trigger" href="#updateProject" ><i data-project-id="<?=$project["Id"]?>" class="material-icons purple-text darken-4 Ta">edit</i></span>
                     </li>
                     <li>
                     <span  class="waves-effect waves-light T modal-trigger" href="#modal2" ><i data-project-id="<?=$project["Id"]?>" class="material-icons purple-text darken-4 T">assignment</i></span>
@@ -118,7 +118,7 @@ foreach($stats['projects'] as $project)
                     <i class="material-icons">sync</i><?=logDate($assignment["Status"])?>
                     </li>
                     <li>
-                    <span  class="waves-effect waves-light T modal-trigger" href="#updateAssignment" ><i class="material-icons purple-text">edit</i></span>
+                    <span  class="waves-effect waves-light Ta modal-trigger" href="#updateAssignment" data-assignment-id=<?=$assignment["Id"]?>><i class="material-icons purple-text" data-assignment-id=<?=$assignment["Id"]?>>edit</i></span>
                     </li>
                     <li>
                     <span  class="waves-effect waves-light" onclick="deleteAssignment(<?=$assignment['Id']?>)" ><i data-project-id="<?=$project["Id"]?>" class="material-icons red-text darken-4 T">delete</i></span>
@@ -138,18 +138,23 @@ foreach($stats['projects'] as $project)
     <h3>My Active Assignments</h3>
 
     <ul class="collection unfinished">
+
         <?php foreach($UserData["assignments"] as $assignment):?>
             <li class="collection-item">
                 <ul class="<?=str_replace(" ","-",$assignment["Status"])?> detail-items">
+                    <li><strong >Owner :</strong ></li>
                     <li><?=$assignment["Owner"]?></li>
+                    <li><strong >Project  :</strong ></li>
                     <li><?=$assignment["Project"]?></li>
+                    <li><strong >Assignment :</strong ></li>
                     <li><?=$assignment["Name"]?></li>
+                    <li><strong >Status :</strong ></li>
                     <li><?=$assignment["Status"]?></li>
                     <li><?=logDate($assignment["DueDate"])?></li>
                     <li><a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Mark As</a></li>
                 </ul>
                 <!-- Dropdown Structure -->
-                <ul id='dropdown1' class='dropdown-content' style="width:20%;">
+                <ul id='dropdown1' class='dropdown-content' style="width:100% !important;">
                     <?php foreach($UserData["statuses"] as $status):?>
                     <li><a onclick="changeStatus(<?=$status['Id']?>,<?=$assignment['Id']?>)" data-id="<?=$status["Id"]?>" ><?=$status["Label"]?></a></li>
                     <?php endforeach?>
@@ -164,7 +169,7 @@ foreach($stats['projects'] as $project)
     <div id="modal1" class="modal">
     <div class="modal-content">
         <h4>Add New Project</h4>
-        <form action="/addProject" name="newProject" method="post">
+        <form action="/addProject" name="newProject" method="post" data-success-msg="project Created!">
             <div class="form-group">
                 <label for="Name">Name</label>
                 <input name="Name" type="text" class="form-control" id="Name" aria-describedby="NameHelp" placeholder="Enter Project Name" required>
@@ -185,14 +190,14 @@ foreach($stats['projects'] as $project)
     <div id="updateProject" class="modal">
     <div class="modal-content">
         <h4>Update Project</h4>
-        <form action="/UpdateProject" name="newProject" method="post">
+        <form action="/UpdateProject" name="updateProject" method="post" data-success-msg="project Updated!">
             <div class="form-group">
                 <label for="Name">Name</label>
-                <input name="Name" type="text" class="form-control" id="Name" aria-describedby="NameHelp" placeholder="Enter Project Name" required>
+                <input name="Name" type="text" class="form-control" id="Name-update" aria-describedby="NameHelp" placeholder="Enter Project Name" required>
             </div>
             <div class="form-group">
                 <label for="DueDate">Due Date</label>
-                <input name="DueDate" type="date" class="form-control" id="DueDate" aria-describedby="NameHelp" placeholder="Enter Project Name" required>
+                <input name="DueDate" type="date" class="form-control" id="DueDate-update" aria-describedby="NameHelp" placeholder="Enter Project Name" required>
             </div>
         </div>
         <div class="modal-footer">
@@ -205,7 +210,7 @@ foreach($stats['projects'] as $project)
     <div id="modal2" class="modal" style="height:100%">
         <div class="modal-content">
             <h4>Add New Assignment</h4>
-            <form action="/addAssignment" name="newAssignment" method="post">
+            <form action="/addAssignment" name="newAssignment" method="post" data-success-msg="Assignment Created!">
                 <div class="form-group">
                     <label for="assignmentName">Name</label>
                     <input name="Name" type="text" class="form-control" id="assignmentName" aria-describedby="NameHelp" placeholder="Enter Assignment Name" required>
@@ -241,7 +246,7 @@ foreach($stats['projects'] as $project)
     <div id="updateAssignment" class="modal">
     <div class="modal-content">
         <h4>Update Assignment</h4>
-        <form action="/UpdateProject" name="newProject" method="post">
+        <form action="/UpdateProject" name="newProject" method="post" data-success-msg="Assignment Updated!">
             <div class="form-group">
                 <label for="Name">Name</label>
                 <input name="Name" type="text" class="form-control" id="Name" aria-describedby="NameHelp" placeholder="Enter Project Name" required>

@@ -20,7 +20,11 @@ $routes = array(
     '/addAssignment' => 'addAssignment',
     '/deleteProject' => 'deleteProject',
     '/deleteAssignment' => 'deleteAssignment',
-    '/updateStatus'=>'updateStatus'
+    '/updateStatus'=>'updateStatus',
+    '/getProject'=>'getProject',
+    '/getAssignment'=>'getAssignment',
+    '/UpdateProject' =>'updateProject'
+
 
     // Add more routes as needed
 );

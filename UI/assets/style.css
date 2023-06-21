@@ -33,9 +33,9 @@ span.counter{
 .FINISHED{
   border-left: solid 5px rgb(21, 172, 21) ;
 }
-#dropdown1 {
-  width:20% !important;
-  overflow:hidden;
+.dropdown-content {
+  width: auto !important;
+  max-height: none !important;
 }
 .collection.unfinished {
   padding: 5rem;

@@ -156,7 +156,7 @@ foreach ($stats['projects'] as $project) {
                     <tr>
                         <td><?= $assignment["Owner"] ?></td>
                         <td><?= $assignment["Project"] ?></td>
-                        <td><?= $assignment["Name"] ?> | <?= $assignment["Id"] ?></td>
+                        <td><?= $assignment["Name"] ?>   </td>
                         <td>
                             <div class="<?= str_replace(" ", "-", $assignment["Status"]) ?> detail-items">
                                 <?= $assignment["Status"] ?>
